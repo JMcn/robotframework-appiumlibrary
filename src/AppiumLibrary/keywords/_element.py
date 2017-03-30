@@ -380,6 +380,29 @@ class _ElementKeywords(KeywordGroup):
         except:
             raise AssertionError("Attribute '%s' is not valid for element '%s'" % (attribute, locator))
 
+    def get_element_index_attribute(self, locator, index, attribute):
+        """Get element attribute using given attribute: name, value,...
+
+        Examples:
+
+        | Get Element Attribute | locator | 0 | name |
+        | Get Element Attribute | locator | 0 | value |
+        """
+        elements = self._element_find(locator, False, True)
+        self._info("Elements: %s " % elements[int(index)])
+        ele_len = len(elements)
+        if ele_len == 0:
+            raise AssertionError("Element '%s' could not be found" % locator)
+        elif ele_len > 1:
+            self._info("CAUTION: '%s' matched %s elements - using the %s index of elements" % (locator, len(elements), index))
+
+        try:
+            attr_val = elements[int(index)].get_attribute(attribute)
+            self._info("Element '%s'[%s] attribute '%s' value '%s' " % (locator, index, attribute, attr_val))
+            return attr_val
+        except:
+            raise AssertionError("Attribute '%s' is not valid for element '%s'[%s]" % (attribute, locator, index))
+
     def get_element_location(self, locator):
         """Get element location
 
