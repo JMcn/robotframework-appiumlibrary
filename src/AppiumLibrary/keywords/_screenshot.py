@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import time
 import robot
 from .keywordgroup import KeywordGroup
 
@@ -42,7 +43,8 @@ class _ScreenshotKeywords(KeywordGroup):
     def _get_screenshot_paths(self, filename):
         if not filename:
             self._screenshot_index += 1
-            filename = 'appium-screenshot-%d.png' % self._screenshot_index
+            date=int(time.time())
+            filename = 'appium-screenshot-%d-%d.png' % (date, self._screenshot_index)
         else:
             filename = filename.replace('/', os.sep)
         logdir = self._get_log_dir()
